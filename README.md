@@ -187,28 +187,81 @@ nuevaeps-frontend/
 ├── .prettierignore             # Archivos ignorados por Prettier
 ├── index.html                  # HTML principal
 └── src/
-    ├── pages/
-    │   ├── LoginPage.tsx       # Login
-    │   ├── RegisterPage.tsx    # Registro
-    │   ├── DashboardPage.tsx   # Panel principal
-    │   ├── SolicitudesPage.tsx # Mis solicitudes
-    │   ├── MedicamentosPage.tsx # Catálogo de medicamentos
-    │   └── *.css               # Estilos por página
+    ├── pages/                  # Páginas por feature
+    │   ├── auth/
+    │   │   ├── LoginPage.tsx       # Login
+    │   │   ├── RegisterPage.tsx    # Registro
+    │   │   ├── AuthForms.css       # Estilos auth
+    │   │   └── index.ts            # Exports
+    │   ├── dashboard/
+    │   │   ├── DashboardPage.tsx   # Panel principal
+    │   │   ├── DashboardPage.css   # Estilos
+    │   │   └── index.ts            # Exports
+    │   ├── medicamentos/
+    │   │   ├── MedicamentosPage.tsx # Catálogo
+    │   │   ├── MedicamentosPage.css # Estilos
+    │   │   └── index.ts             # Exports
+    │   ├── solicitudes/
+    │   │   ├── SolicitudesPage.tsx  # Mis solicitudes
+    │   │   ├── SolicitudesPage.css  # Estilos
+    │   │   └── index.ts             # Exports
+    │   └── index.ts                 # Exports centralizados
     ├── components/
-    │   ├── Layout.tsx          # Layout con navegación
-    │   ├── PrivateRoute.tsx    # Protección de rutas
-    │   ├── *.test.tsx          # Tests de componentes
-    │   └── *.css               # Estilos de componentes
+    │   ├── common/                  # Componentes compartidos
+    │   │   ├── PrivateRoute.tsx     # Protección de rutas
+    │   │   └── index.ts             # Exports
+    │   ├── layout/                  # Layout principal
+    │   │   ├── Layout.tsx           # Layout con navegación
+    │   │   ├── Layout.css           # Estilos
+    │   │   ├── Layout.test.tsx      # Tests
+    │   │   └── index.ts             # Exports
+    │   └── [otros componentes]
     ├── services/
-    │   ├── api.ts              # Cliente Axios con JWT
-    │   └── api.test.ts         # Tests de API
+    │   ├── api/
+    │   │   ├── client.ts            # Cliente Axios con JWT
+    │   │   ├── client.test.ts       # Tests
+    │   │   └── index.ts             # Exports
+    │   ├── hooks/                   # Custom hooks (preparado)
+    │   ├── index.ts                 # Exports
+    │   └── api.test.ts              # Tests heredados
+    ├── styles/                      # Estilos globales
+    │   ├── globals.css              # Estilos globales
+    │   └── layout.css               # Estilos layout
+    ├── store/                       # Estado global (preparado)
+    ├── types/                       # Tipos TypeScript
+    │   ├── solicitud.ts             # Tipos de Solicitud
+    │   └── medicamento.ts           # Tipos de Medicamento
+    ├── assets/                      # Assets (imágenes, fonts)
+    ├── utils/                       # Funciones utilitarias
     ├── test/
-    │   └── setup.ts            # Configuración global de tests
-    ├── types/
-    │   ├── solicitud.ts        # Tipos de Solicitud
-    │   └── medicamento.ts      # Tipos de Medicamento
-    ├── App.tsx                 # Componente raíz
-    └── main.tsx                # Punto de entrada
+    │   └── setup.ts                 # Configuración global de tests
+    ├── App.tsx                      # Componente raíz
+    └── main.tsx                     # Punto de entrada
+```
+
+### Path Aliases
+
+El proyecto usa path aliases para imports limpios:
+
+```typescript
+@/            → src/
+@components/  → src/components/
+@pages/       → src/pages/
+@services/    → src/services/
+@styles/      → src/styles/
+@types/       → src/types/
+@assets/      → src/assets/
+@utils/       → src/utils/
+@store/       → src/store/
+```
+
+**Ejemplo de imports:**
+```typescript
+// ❌ Antes (rutas relativas)
+import { Layout } from '../../../components/layout/Layout';
+
+// ✅ Ahora (aliases limpios)
+import { Layout } from '@components/layout';
 ```
 
 ---
