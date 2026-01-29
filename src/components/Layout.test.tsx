@@ -1,7 +1,7 @@
-import { describe, it, expect, vi } from 'vitest'
-import { render, screen } from '@testing-library/react'
-import { BrowserRouter } from 'react-router-dom'
-import Layout from './Layout'
+import { describe, it, expect, vi } from 'vitest';
+import { render, screen } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
+import Layout from './Layout';
 
 // Mock localStorage
 const localStorageMock = {
@@ -9,14 +9,14 @@ const localStorageMock = {
   setItem: vi.fn(),
   removeItem: vi.fn(),
   clear: vi.fn(),
-}
+};
 Object.defineProperty(window, 'localStorage', {
   value: localStorageMock,
-})
+});
 
 describe('Layout Component', () => {
   it('should render children correctly', () => {
-    localStorageMock.getItem.mockReturnValue('testuser')
+    localStorageMock.getItem.mockReturnValue('testuser');
 
     render(
       <BrowserRouter>
@@ -24,13 +24,13 @@ describe('Layout Component', () => {
           <div>Test Content</div>
         </Layout>
       </BrowserRouter>
-    )
+    );
 
-    expect(screen.getByText('Test Content')).toBeInTheDocument()
-  })
+    expect(screen.getByText('Test Content')).toBeInTheDocument();
+  });
 
   it('should display username when logged in', () => {
-    localStorageMock.getItem.mockReturnValue('testuser')
+    localStorageMock.getItem.mockReturnValue('testuser');
 
     render(
       <BrowserRouter>
@@ -38,13 +38,13 @@ describe('Layout Component', () => {
           <div>Content</div>
         </Layout>
       </BrowserRouter>
-    )
+    );
 
-    expect(screen.getByText(/testuser/i)).toBeInTheDocument()
-  })
+    expect(screen.getByText(/testuser/i)).toBeInTheDocument();
+  });
 
   it('should render navigation links', () => {
-    localStorageMock.getItem.mockReturnValue('testuser')
+    localStorageMock.getItem.mockReturnValue('testuser');
 
     render(
       <BrowserRouter>
@@ -52,11 +52,11 @@ describe('Layout Component', () => {
           <div>Content</div>
         </Layout>
       </BrowserRouter>
-    )
+    );
 
     // Verificar links en español
-    expect(screen.getByText(/Panel Principal/i)).toBeInTheDocument()
-    expect(screen.getByText(/Medicamentos/i)).toBeInTheDocument()
-    expect(screen.getByText(/Solicitudes/i)).toBeInTheDocument()
-  })
-})
+    expect(screen.getByText(/Panel Principal/i)).toBeInTheDocument();
+    expect(screen.getByText(/Medicamentos/i)).toBeInTheDocument();
+    expect(screen.getByText(/Solicitudes/i)).toBeInTheDocument();
+  });
+});

@@ -1,26 +1,26 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
-import { useState, useEffect } from 'react'
-import LoginPage from '@pages/LoginPage'
-import RegisterPage from '@pages/RegisterPage'
-import DashboardPage from '@pages/DashboardPage'
-import MedicamentosPage from '@pages/MedicamentosPage'
-import SolicitudesPage from '@pages/SolicitudesPage'
-import PrivateRoute from '@components/PrivateRoute'
-import './App.css'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import LoginPage from '@pages/LoginPage';
+import RegisterPage from '@pages/RegisterPage';
+import DashboardPage from '@pages/DashboardPage';
+import MedicamentosPage from '@pages/MedicamentosPage';
+import SolicitudesPage from '@pages/SolicitudesPage';
+import PrivateRoute from '@components/PrivateRoute';
+import './App.css';
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [loading, setLoading] = useState(true)
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // Verificar si hay un token guardado
-    const token = localStorage.getItem('token')
-    setIsAuthenticated(!!token)
-    setLoading(false)
-  }, [])
+    const token = localStorage.getItem('token');
+    setIsAuthenticated(!!token);
+    setLoading(false);
+  }, []);
 
   if (loading) {
-    return <div className="loading">Cargando...</div>
+    return <div className="loading">Cargando...</div>;
   }
 
   return (
@@ -28,7 +28,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<LoginPage setIsAuthenticated={setIsAuthenticated} />} />
         <Route path="/register" element={<RegisterPage />} />
-        
+
         <Route element={<PrivateRoute isAuthenticated={isAuthenticated} />}>
           <Route path="/" element={<DashboardPage />} />
           <Route path="/medicamentos" element={<MedicamentosPage />} />
@@ -38,7 +38,7 @@ function App() {
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>
-  )
+  );
 }
 
-export default App
+export default App;

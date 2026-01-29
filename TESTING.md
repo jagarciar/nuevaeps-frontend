@@ -1,6 +1,6 @@
-# Configuración de Testing para Frontend
+# Configuración de Testing y Code Quality para Frontend
 
-Este proyecto utiliza **Vitest** y **React Testing Library** para pruebas automatizadas.
+Este proyecto utiliza **Vitest** para testing, **ESLint** para linting y **Prettier** para formateo de código.
 
 ## 🧪 Comandos de Testing
 
@@ -18,9 +18,27 @@ npm run test:ui
 npm run test:coverage
 ```
 
+## 🎨 Comandos de Formateo
+
+```bash
+# Formatear código automáticamente
+npm run format
+
+# Verificar formateo sin cambios
+npm run format:check
+```
+
+## 🔍 Comandos de Linting
+
+```bash
+# Ejecutar linting
+npm run lint
+```
+
 ## 🪝 Pre-commit Hooks
 
-Se ha configurado **Husky** para ejecutar automáticamente:
+Se ha configurado **Husky** para ejecutar automáticamente en cada commit:
+- 🎨 Formateo (Prettier)
 - ✅ Linting (ESLint)
 - ✅ Tests (Vitest)
 
@@ -48,6 +66,9 @@ describe('Component', () => {
 
 - **vitest.config.ts**: Configuración de Vitest
 - **src/test/setup.ts**: Setup global para tests
+- **.eslintrc.cjs**: Configuración de ESLint con Prettier integration
+- **.prettierrc**: Configuración de Prettier
+- **.prettierignore**: Archivos que Prettier debe ignorar
 - **.husky/pre-commit**: Hook de pre-commit
 
 ## 📊 Cobertura
@@ -64,4 +85,5 @@ Si necesitas hacer un commit sin ejecutar los checks:
 git commit -m "mensaje" --no-verify
 ```
 
-**Nota**: Esto no es recomendado, ya que puede introducir código con errores.
+**Nota**: Esto no es recomendado, ya que puede introducir código con errores o mal formateado.
+

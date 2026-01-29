@@ -1,10 +1,10 @@
-import { useNavigate, useLocation } from 'react-router-dom'
-import Layout from '@components/Layout'
-import './DashboardPage.css'
+import { useNavigate, useLocation } from 'react-router-dom';
+import Layout from '@components/Layout';
+import './DashboardPage.css';
 
 const DashboardPage = () => {
-  const navigate = useNavigate()
-  const location = useLocation()
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const cards = [
     {
@@ -29,7 +29,7 @@ const DashboardPage = () => {
       external: true,
       color: '#f093fb',
     },
-  ]
+  ];
 
   return (
     <Layout title="Panel Principal" currentPath={location.pathname}>
@@ -41,9 +41,9 @@ const DashboardPage = () => {
             style={{ borderLeftColor: card.color }}
             onClick={() => {
               if (card.external) {
-                window.open(card.path, '_blank')
+                window.open(card.path, '_blank');
               } else {
-                navigate(card.path)
+                navigate(card.path);
               }
             }}
           >
@@ -54,7 +54,7 @@ const DashboardPage = () => {
         ))}
       </div>
     </Layout>
-  )
-}
+  );
+};
 
-export default DashboardPage
+export default DashboardPage;

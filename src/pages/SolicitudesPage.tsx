@@ -1,61 +1,63 @@
-import { useState, useEffect, useCallback } from 'react'
-import Layout from '@components/Layout'
-import { apiCall } from '@services/api'
-import type { SolicitudMedicamento } from 'solicitud'
-import type { Medicamento } from 'medicamento'
-import './SolicitudesPage.css'
+import { useState, useEffect, useCallback } from 'react';
+import Layout from '@components/Layout';
+import { apiCall } from '@services/api';
+import type { SolicitudMedicamento } from 'solicitud';
+import type { Medicamento } from 'medicamento';
+import './SolicitudesPage.css';
 
 const SolicitudesPage = () => {
-  const [solicitudes, setSolicitudes] = useState<SolicitudMedicamento[]>([])
-  const [medicamentos, setMedicamentos] = useState<Medicamento[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState('')
-  const [successMessage, setSuccessMessage] = useState('')
-  const [showForm, setShowForm] = useState(false)
+  const [solicitudes, setSolicitudes] = useState<SolicitudMedicamento[]>([]);
+  const [medicamentos, setMedicamentos] = useState<Medicamento[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+  const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({
     medicamentoId: '',
     numeroOrden: '',
     direccion: '',
     telefono: '',
     correoElectronico: '',
-  })
+  });
 
-  const currentUserId = localStorage.getItem('userId')
+  const currentUserId = localStorage.getItem('userId');
 
   const fetchData = useCallback(async () => {
     try {
-      setLoading(true)
+      setLoading(true);
       // Obtener solicitudes del usuario
-      const solicitudesResponse = await apiCall.get(`/solicitudes-medicamentos/usuario/${currentUserId}`)
-      setSolicitudes(solicitudesResponse.data)
-      
+      const solicitudesResponse = await apiCall.get(
+        `/solicitudes-medicamentos/usuario/${currentUserId}`
+      );
+      setSolicitudes(solicitudesResponse.data);
+
       // Obtener medicamentos
-      const medicamentosResponse = await apiCall.get('/medicamentos')
-      setMedicamentos(medicamentosResponse.data)
-      
-      setError('')
+      const medicamentosResponse = await apiCall.get('/medicamentos');
+      setMedicamentos(medicamentosResponse.data);
+
+      setError('');
     } catch (err: unknown) {
-      setError('Error al cargar datos')
-      console.error(err)
+      setError('Error al cargar datos');
+      console.error(err);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }, [currentUserId])
+  }, [currentUserId]);
 
   useEffect(() => {
-    fetchData()
-  }, [fetchData])
+    fetchData();
+  }, [fetchData]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target
-    setFormData(prev => ({
+    const { name, value } = e.target;
+    setFormData((prev) => ({
       ...prev,
       [name]: value,
-    }))
-  }
+    }));
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
       await apiCall.post('/solicitudes-medicamentos', {
         medicamentoId: parseInt(formData.medicamentoId),
@@ -64,29 +66,29 @@ const SolicitudesPage = () => {
         direccion: formData.direccion,
         telefono: formData.telefono,
         correoElectronico: formData.correoElectronico,
-      })
+      });
       setFormData({
         medicamentoId: '',
         numeroOrden: '',
         direccion: '',
         telefono: '',
         correoElectronico: '',
-      })
-      setShowForm(false)
-      setSuccessMessage('Solicitud creada exitosamente')
-      setTimeout(() => setSuccessMessage(''), 3000)
-      fetchData()
+      });
+      setShowForm(false);
+      setSuccessMessage('Solicitud creada exitosamente');
+      setTimeout(() => setSuccessMessage(''), 3000);
+      fetchData();
     } catch (err: unknown) {
-      const error = err as { response?: { data?: { message?: string } } }
-      setError(error.response?.data?.message || 'Error al crear solicitud')
-      console.error(err)
+      const error = err as { response?: { data?: { message?: string } } };
+      setError(error.response?.data?.message || 'Error al crear solicitud');
+      console.error(err);
     }
-  }
+  };
 
   const getMedicamentoNombre = (medicamentoId: number) => {
-    const med = medicamentos.find(m => m.id === medicamentoId)
-    return med ? med.nombre : `ID: ${medicamentoId}`
-  }
+    const med = medicamentos.find((m) => m.id === medicamentoId);
+    return med ? med.nombre : `ID: ${medicamentoId}`;
+  };
 
   return (
     <Layout title="Mis Solicitudes" currentPath="/solicitudes">
@@ -100,7 +102,7 @@ const SolicitudesPage = () => {
       {showForm && (
         <form onSubmit={handleSubmit} className="form-container">
           <h3>Nueva Solicitud de Medicamento</h3>
-          
+
           <div className="form-group">
             <label htmlFor="medicamentoId">Medicamento *</label>
             <select
@@ -111,7 +113,7 @@ const SolicitudesPage = () => {
               required
             >
               <option value="">Selecciona un medicamento</option>
-              {medicamentos.map(med => (
+              {medicamentos.map((med) => (
                 <option key={med.id} value={med.id}>
                   {med.nombre}
                 </option>
@@ -171,7 +173,9 @@ const SolicitudesPage = () => {
             />
           </div>
 
-          <button type="submit" className="submit-btn">Crear Solicitud</button>
+          <button type="submit" className="submit-btn">
+            Crear Solicitud
+          </button>
         </form>
       )}
 
@@ -208,7 +212,7 @@ const SolicitudesPage = () => {
         </div>
       )}
     </Layout>
-  )
-}
+  );
+};
 
-export default SolicitudesPage
+export default SolicitudesPage;

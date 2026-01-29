@@ -1,23 +1,23 @@
-import { useNavigate, useLocation } from 'react-router-dom'
-import './Layout.css'
+import { useNavigate, useLocation } from 'react-router-dom';
+import './Layout.css';
 
 interface LayoutProps {
-  children: React.ReactNode
-  title: string
-  currentPath: string
+  children: React.ReactNode;
+  title: string;
+  currentPath: string;
 }
 
 const Layout = ({ children, title }: LayoutProps) => {
-  const navigate = useNavigate()
-  const location = useLocation()
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const handleLogout = () => {
-    localStorage.removeItem('token')
-    localStorage.removeItem('username')
-    navigate('/login')
-  }
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    navigate('/login');
+  };
 
-  const isActive = (path: string) => location.pathname === path
+  const isActive = (path: string) => location.pathname === path;
 
   return (
     <div className="app-container">
@@ -28,11 +28,7 @@ const Layout = ({ children, title }: LayoutProps) => {
         <nav>
           <ul className="sidebar-nav">
             <li>
-              <a
-                href="#"
-                onClick={() => navigate('/')}
-                className={isActive('/') ? 'active' : ''}
-              >
+              <a href="#" onClick={() => navigate('/')} className={isActive('/') ? 'active' : ''}>
                 🏠 Panel Principal
               </a>
             </li>
@@ -74,7 +70,7 @@ const Layout = ({ children, title }: LayoutProps) => {
         <div className="content">{children}</div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Layout
+export default Layout;

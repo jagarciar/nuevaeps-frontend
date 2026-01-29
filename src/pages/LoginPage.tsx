@@ -1,57 +1,57 @@
-import { useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
-import { apiCall } from '@services/api'
-import './AuthForms.css'
+import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { apiCall } from '@services/api';
+import './AuthForms.css';
 
 interface LoginPageProps {
-  setIsAuthenticated: (value: boolean) => void
+  setIsAuthenticated: (value: boolean) => void;
 }
 
 const LoginPage = ({ setIsAuthenticated }: LoginPageProps) => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: '',
     password: '',
-  })
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
+  });
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    setFormData(prev => ({
+    const { name, value } = e.target;
+    setFormData((prev) => ({
       ...prev,
       [name]: value,
-    }))
-  }
+    }));
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setError('')
-    setLoading(true)
+    e.preventDefault();
+    setError('');
+    setLoading(true);
 
     try {
-      const response = await apiCall.post('/auth/login', formData)
-      localStorage.setItem('token', response.data.token)
-      localStorage.setItem('username', response.data.username)
-      localStorage.setItem('userId', response.data.id || '1') // Guardar userId si viene del backend
-      setIsAuthenticated(true)
-      navigate('/')
+      const response = await apiCall.post('/auth/login', formData);
+      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('username', response.data.username);
+      localStorage.setItem('userId', response.data.id || '1'); // Guardar userId si viene del backend
+      setIsAuthenticated(true);
+      navigate('/');
     } catch (err: unknown) {
-      const error = err as { response?: { data?: { message?: string } } }
-      setError(error.response?.data?.message || 'Error al iniciar sesión')
+      const error = err as { response?: { data?: { message?: string } } };
+      setError(error.response?.data?.message || 'Error al iniciar sesión');
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <div className="auth-container">
       <div className="auth-card">
         <h1>NuevaEPS</h1>
         <h2>Iniciar Sesión</h2>
-        
+
         {error && <div className="error-message">{error}</div>}
-        
+
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="username">Usuario</label>
@@ -89,7 +89,7 @@ const LoginPage = ({ setIsAuthenticated }: LoginPageProps) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default LoginPage
+export default LoginPage;

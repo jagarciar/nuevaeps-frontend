@@ -1,59 +1,59 @@
-import { useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
-import { apiCall } from '@services/api'
-import './AuthForms.css'
+import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { apiCall } from '@services/api';
+import './AuthForms.css';
 
 const RegisterPage = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: '',
     password: '',
     confirmPassword: '',
-  })
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
+  });
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    setFormData(prev => ({
+    const { name, value } = e.target;
+    setFormData((prev) => ({
       ...prev,
       [name]: value,
-    }))
-  }
+    }));
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setError('')
+    e.preventDefault();
+    setError('');
 
     if (formData.password !== formData.confirmPassword) {
-      setError('Las contraseñas no coinciden')
-      return
+      setError('Las contraseñas no coinciden');
+      return;
     }
 
-    setLoading(true)
+    setLoading(true);
 
     try {
       await apiCall.post('/auth/register', {
         username: formData.username,
         password: formData.password,
-      })
-      navigate('/login')
+      });
+      navigate('/login');
     } catch (err: unknown) {
-      const error = err as { response?: { data?: { message?: string } } }
-      setError(error.response?.data?.message || 'Error al registrar usuario')
+      const error = err as { response?: { data?: { message?: string } } };
+      setError(error.response?.data?.message || 'Error al registrar usuario');
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <div className="auth-container">
       <div className="auth-card">
         <h1>NuevaEPS</h1>
         <h2>Registrarse</h2>
-        
+
         {error && <div className="error-message">{error}</div>}
-        
+
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="username">Usuario</label>
@@ -104,7 +104,7 @@ const RegisterPage = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default RegisterPage
+export default RegisterPage;

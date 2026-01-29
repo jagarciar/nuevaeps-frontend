@@ -1,11 +1,11 @@
-import { Navigate, Outlet } from 'react-router-dom'
+import { Navigate, Outlet } from 'react-router-dom';
 
 interface PrivateRouteProps {
-  isAuthenticated: boolean
+  isAuthenticated: boolean;
 }
 
 const PrivateRoute = ({ isAuthenticated }: PrivateRouteProps) => {
-  return isAuthenticated ? <Outlet /> : <Navigate to="/login" replace />
-}
+  return isAuthenticated ? <Outlet /> : <Navigate to="/login" replace />;
+};
 
-export default PrivateRoute
+export default PrivateRoute;

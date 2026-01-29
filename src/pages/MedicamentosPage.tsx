@@ -1,74 +1,74 @@
-import { useState, useEffect } from 'react'
-import Layout from '@components/Layout'
-import { apiCall } from '@services/api'
-import type { Medicamento } from 'medicamento'
-import './MedicamentosPage.css'
+import { useState, useEffect } from 'react';
+import Layout from '@components/Layout';
+import { apiCall } from '@services/api';
+import type { Medicamento } from 'medicamento';
+import './MedicamentosPage.css';
 
 const MedicamentosPage = () => {
-  const [medicamentos, setMedicamentos] = useState<Medicamento[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState('')
-  const [showForm, setShowForm] = useState(false)
+  const [medicamentos, setMedicamentos] = useState<Medicamento[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+  const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({
     nombre: '',
     descripcion: '',
     precio: '',
-  })
+  });
 
   useEffect(() => {
-    fetchMedicamentos()
-  }, [])
+    fetchMedicamentos();
+  }, []);
 
   const fetchMedicamentos = async () => {
     try {
-      setLoading(true)
-      const response = await apiCall.get('/medicamentos')
-      setMedicamentos(response.data)
-      setError('')
+      setLoading(true);
+      const response = await apiCall.get('/medicamentos');
+      setMedicamentos(response.data);
+      setError('');
     } catch (err: unknown) {
-      setError('Error al cargar medicamentos')
-      console.error(err)
+      setError('Error al cargar medicamentos');
+      console.error(err);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target
-    setFormData(prev => ({
+    const { name, value } = e.target;
+    setFormData((prev) => ({
       ...prev,
       [name]: value,
-    }))
-  }
+    }));
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
       await apiCall.post('/medicamentos', {
         nombre: formData.nombre,
         descripcion: formData.descripcion,
         precio: parseFloat(formData.precio),
-      })
-      setFormData({ nombre: '', descripcion: '', precio: '' })
-      setShowForm(false)
-      fetchMedicamentos()
+      });
+      setFormData({ nombre: '', descripcion: '', precio: '' });
+      setShowForm(false);
+      fetchMedicamentos();
     } catch (err: unknown) {
-      setError('Error al crear medicamento')
-      console.error(err)
+      setError('Error al crear medicamento');
+      console.error(err);
     }
-  }
+  };
 
   const handleDelete = async (id: number) => {
     if (window.confirm('¿Estás seguro de que deseas eliminar este medicamento?')) {
       try {
-        await apiCall.delete(`/medicamentos/${id}`)
-        fetchMedicamentos()
+        await apiCall.delete(`/medicamentos/${id}`);
+        fetchMedicamentos();
       } catch (err: unknown) {
-        setError('Error al eliminar medicamento')
-        console.error(err)
+        setError('Error al eliminar medicamento');
+        console.error(err);
       }
     }
-  }
+  };
 
   return (
     <Layout title="Medicamentos" currentPath="/medicamentos">
@@ -114,7 +114,9 @@ const MedicamentosPage = () => {
               required
             />
           </div>
-          <button type="submit" className="submit-btn">Crear Medicamento</button>
+          <button type="submit" className="submit-btn">
+            Crear Medicamento
+          </button>
         </form>
       )}
 
@@ -142,10 +144,7 @@ const MedicamentosPage = () => {
                   <td>{med.descripcion}</td>
                   <td>${med.precio?.toFixed(2)}</td>
                   <td>
-                    <button
-                      className="delete-btn"
-                      onClick={() => handleDelete(med.id!)}
-                    >
+                    <button className="delete-btn" onClick={() => handleDelete(med.id!)}>
                       Eliminar
                     </button>
                   </td>
@@ -156,7 +155,7 @@ const MedicamentosPage = () => {
         </div>
       )}
     </Layout>
-  )
-}
+  );
+};
 
-export default MedicamentosPage
+export default MedicamentosPage;
