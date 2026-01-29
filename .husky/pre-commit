@@ -1,0 +1,7 @@
+echo "🔍 Running lint..."
+npm run lint
+
+echo "🧪 Running tests..."
+npm test
+
+echo "✅ All checks passed!"
