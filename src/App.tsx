@@ -1,12 +1,12 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import LoginPage from '@pages/LoginPage';
-import RegisterPage from '@pages/RegisterPage';
-import DashboardPage from '@pages/DashboardPage';
-import MedicamentosPage from '@pages/MedicamentosPage';
-import SolicitudesPage from '@pages/SolicitudesPage';
-import PrivateRoute from '@components/PrivateRoute';
-import './App.css';
+import { LoginPage, RegisterPage } from '@pages/auth';
+import { DashboardPage } from '@pages/dashboard';
+import { MedicamentosPage } from '@pages/medicamentos';
+import { SolicitudesPage } from '@pages/solicitudes';
+import { PrivateRoute } from '@components/common';
+import '@styles/globals.css';
+import '@styles/layout.css';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);

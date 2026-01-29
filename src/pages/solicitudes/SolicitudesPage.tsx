@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
-import Layout from '@components/Layout';
+import Layout from '@components/layout/Layout';
 import { apiCall } from '@services/api';
-import type { SolicitudMedicamento } from 'solicitud';
-import type { Medicamento } from 'medicamento';
+import type { SolicitudMedicamento } from '../../types/solicitud';
+import type { Medicamento } from '../../types/medicamento';
 import './SolicitudesPage.css';
 
 const SolicitudesPage = () => {

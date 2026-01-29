@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import Layout from '@components/Layout';
+import { Layout } from '@components/layout';
 import { apiCall } from '@services/api';
-import type { Medicamento } from 'medicamento';
+import type { Medicamento } from '../../types/medicamento';
 import './MedicamentosPage.css';
 
 const MedicamentosPage = () => {

@@ -29,8 +29,11 @@
       "@components/*": ["src/components/*"],
       "@pages/*": ["src/pages/*"],
       "@services/*": ["src/services/*"],
+      "@styles/*": ["src/styles/*"],
       "@types/*": ["src/types/*"],
+      "@assets/*": ["src/assets/*"],
       "@utils/*": ["src/utils/*"],
+      "@store/*": ["src/store/*"],
       "types/*": ["src/types/*"],
       "medicamento": ["src/types/medicamento.ts"],
       "solicitud": ["src/types/solicitud.ts"]
