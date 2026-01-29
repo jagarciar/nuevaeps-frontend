@@ -31,7 +31,7 @@ const LoginPage = ({ setIsAuthenticated }: LoginPageProps) => {
 
     try {
       const response = await apiCall.post('/auth/login', formData);
-      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('token', response.data.accessToken);
       localStorage.setItem('username', response.data.username);
       localStorage.setItem('userId', response.data.id || '1'); // Guardar userId si viene del backend
       setIsAuthenticated(true);

@@ -2,6 +2,16 @@
 
 Frontend ReactJS de NuevaEPS - Sistema de gestión de solicitudes de medicamentos con autenticación JWT y containerizado con Docker.
 
+> **Nota**: Este es un repositorio independiente. Para la configuración completa del proyecto con Docker Compose, consulta el [repositorio principal de NuevaEPS](../README.md).
+
+## 📦 Estructura del Proyecto
+
+Este frontend es parte de un sistema multi-repositorio:
+
+- **[NuevaEPS](../README.md)** - Repositorio principal con Docker Compose y documentación completa
+- **nuevaeps-backend** - API REST Spring Boot
+- **nuevaeps-frontend** (este repo) - Aplicación React
+
 ## ✨ Características Principales
 
 - **Autenticación Segura**: Login y registro con JWT
@@ -32,7 +42,55 @@ Frontend ReactJS de NuevaEPS - Sistema de gestión de solicitudes de medicamento
 
 ---
 
+## 🚀 Inicio Rápido
+
+### Con el Stack Completo (Recomendado)
+
+```bash
+# Desde el repositorio principal
+cd ../
+start.bat up  # Windows
+./start.sh up # Linux/Mac
+
+# Accede a:
+# - Frontend: http://localhost
+# - Con backend y base de datos listos
+```
+
+### Desarrollo Local Solo Frontend
+
+```bash
+# 1. Instalar dependencias
+npm install
+
+# 2. Iniciar dev server
+npm run dev
+
+# 3. Accede a http://localhost:5173
+# Nota: El backend debe estar corriendo en http://localhost:8080
+```
+
+---
+
+## 🛠️ Tecnologías (Detallado)
+
+- **React**: 18.2.0
+- **TypeScript**: 5.2.2
+- **Vite**: 5.0.8
+- **React Router**: 6.20.0
+- **Axios**: 1.6.2
+- **Vitest**: 1.6.1 (Testing)
+- **ESLint**: 8.57.1 (Linting)
+- **Prettier**: (Code Formatting)
+- **Husky**: 9.1.7 (Git Hooks)
+- **Node.js**: 20-alpine (build)
+- **Nginx**: Alpine (producción)
+
+---
+
 ## 🚀 Instalación y Ejecución
+
+> **💡 Recomendación**: Para ejecutar el stack completo (Backend + Frontend + PostgreSQL + pgAdmin), usa el [repositorio principal](../README.md) con `docker-compose.yml`.
 
 ### Opción 1: Desarrollo Local (sin Docker)
 
@@ -864,6 +922,35 @@ docker-compose up -d frontend
 
 ---
 
+## 🤝 Contribución
+
+1. Crea una rama para tu feature: `git checkout -b feature/mi-feature`
+2. Realiza tus cambios
+3. Ejecuta las pruebas: `npm test`
+4. Ejecuta el linter: `npm run lint`
+5. Commit tus cambios: `git commit -m "feat: descripción"`
+6. Push a tu rama: `git push origin feature/mi-feature`
+7. Crea un Pull Request
+
+---
+
+## 📚 Documentación Adicional
+
+- [Documentación Principal del Proyecto](../README.md) - Configuración completa con Docker Compose
+- [Backend README](../nuevaeps-backend/README.md) - Documentación de la API REST
+- [Guía de Arquitectura](../README.md#-arquitectura-del-sistema) - Diagrama y flujo del sistema
+
+---
+
+## 📞 Soporte
+
+Para reportar bugs o solicitar funcionalidades:
+1. Revisa la [documentación principal](../README.md)
+2. Verifica los issues existentes en el repositorio
+3. Crea un nuevo issue con detalles específicos
+
+---
+
 ## ✅ Completado
 
 - ✅ Interfaz de Login
@@ -878,6 +965,8 @@ docker-compose up -d frontend
 - ✅ Dockerizado (multi-stage build)
 - ✅ Nginx optimizado
 - ✅ Docker Compose integrado
+- ✅ Testing con Vitest
+- ✅ TypeScript completo
 
 ---
 

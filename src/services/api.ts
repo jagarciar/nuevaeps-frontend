@@ -1,28 +1,41 @@
-import axios from 'axios';
+import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 
 const API_BASE_URL = '/api/v1';
 
-const apiCall = axios.create({
+const apiCall: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
 
-// Agregar token a las requests
-apiCall.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+// Interceptor de request para agregar token JWT
+apiCall.interceptors.request.use(
+  (config: InternalAxiosRequestConfig) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
   }
-  return config;
-});
+);
 
-// Manejar respuestas de error
+// Interceptor de response para manejar errores
 apiCall.interceptors.response.use(
   (response) => response,
   (error) => {
+    // Si el servidor retorna 401, limpiar sesión y redirigir al login
     if (error.response?.status === 401) {
       localStorage.removeItem('token');
       localStorage.removeItem('username');
-      window.location.href = '/login';
+      localStorage.removeItem('userId');
+      // Redirigir solo si no estamos ya en login
+      if (window.location.pathname !== '/login') {
+        window.location.href = '/login';
+      }
     }
     return Promise.reject(error);
   }
