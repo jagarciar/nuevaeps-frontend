@@ -1,4 +1,5 @@
 import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
+import { clearUserSession } from '@utils/authUtils';
 
 const API_BASE_URL = '/api/v1';
 
@@ -29,9 +30,7 @@ apiCall.interceptors.response.use(
   (error) => {
     // Si el servidor retorna 401, limpiar sesión y redirigir al login
     if (error.response?.status === 401) {
-      localStorage.removeItem('token');
-      localStorage.removeItem('username');
-      localStorage.removeItem('userId');
+      clearUserSession();
       // Redirigir solo si no estamos ya en login
       if (window.location.pathname !== '/login') {
         window.location.href = '/login';

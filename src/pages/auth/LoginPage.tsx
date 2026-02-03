@@ -33,7 +33,11 @@ const LoginPage = ({ setIsAuthenticated }: LoginPageProps) => {
       const response = await apiCall.post('/auth/login', formData);
       localStorage.setItem('token', response.data.accessToken);
       localStorage.setItem('username', response.data.username);
-      localStorage.setItem('userId', response.data.id || '1'); // Guardar userId si viene del backend
+      localStorage.setItem('userId', response.data.id || '1');
+      // Guardar roles como un arreglo JSON en localStorage
+      if (response.data.roles && Array.isArray(response.data.roles)) {
+        localStorage.setItem('roles', JSON.stringify(response.data.roles));
+      }
       setIsAuthenticated(true);
       navigate('/');
     } catch (err: unknown) {
